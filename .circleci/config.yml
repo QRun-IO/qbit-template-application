@@ -6,4 +6,4 @@ orbs:
 workflows:
    build:
       jobs:
-         - qqq-orb/mvn_test
+         - qqq-orb/mvn_test_only

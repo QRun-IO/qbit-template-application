@@ -17,6 +17,7 @@ import com.kingsrook.qqq.backend.core.model.metadata.MetaDataProducerHelper;
 import com.kingsrook.qqq.backend.core.model.metadata.MetaDataProducerInterface;
 import com.kingsrook.qqq.backend.core.model.metadata.MetaDataProducerOutput;
 import com.kingsrook.qqq.backend.core.model.metadata.QInstance;
+import com.kingsrook.qqq.backend.core.model.metadata.layout.QAppMetaData;
 import com.kingsrook.qqq.backend.core.model.metadata.layout.QAppSection;
 import com.kingsrook.qqq.backend.core.model.metadata.layout.QIcon;
 import com.kingsrook.qqq.backend.core.model.metadata.qbits.QBitMetaData;
@@ -104,20 +105,20 @@ public class ExampleAppQBitProducer implements QBitProducer
       }
 
       /////////////////////////////////////////////////////////////////////////
-      // Register QAppSection for UI navigation (REQUIRED for app QBits)     //
+      // Register QAppMetaData for UI navigation (REQUIRED for app QBits)    //
       /////////////////////////////////////////////////////////////////////////
-      qInstance.addAppSection(produceAppSection(config, qBitMetaData.getName()));
+      qInstance.addApp(produceApp(config, qBitMetaData.getName()));
    }
 
 
 
    /*******************************************************************************
-    ** Produce the QAppSection for UI navigation.
+    ** Produce the QAppMetaData for UI navigation.
     **
     ** This is REQUIRED for Application QBits - it defines how users navigate
     ** to the tables, processes, and widgets in the UI.
     *******************************************************************************/
-   private QAppSection produceAppSection(ExampleAppQBitConfig config, String qbitName)
+   private QAppMetaData produceApp(ExampleAppQBitConfig config, String qbitName)
    {
       List<String> tables = new ArrayList<>();
       tables.add(config.applyPrefix(ExampleEntity.TABLE_NAME));
@@ -127,12 +128,17 @@ public class ExampleAppQBitProducer implements QBitProducer
          tables.add(config.applyPrefix(ExampleChildEntity.TABLE_NAME));
       }
 
-      return new QAppSection()
+      QAppSection section = new QAppSection()
+         .withName(config.applyPrefix("exampleSection"))
+         .withLabel("Example Application")
+         .withIcon(new QIcon().withName("dashboard"))
+         .withTables(tables);
+
+      return new QAppMetaData()
          .withName(config.applyPrefix("exampleApp"))
          .withLabel("Example Application")
          .withIcon(new QIcon().withName("dashboard"))
-         .withTables(tables)
-         .withSourceQBitName(qbitName);
+         .withSection(section);
    }
 
 

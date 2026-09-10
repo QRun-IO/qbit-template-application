@@ -1,47 +1,30 @@
 # Getting Started
 
-This template helps you create Application QBits - complete mini-applications with UI navigation.
+Requires Java 21, Maven 3.8 or later, and a host application using QQQ 4.0.0. Dependencies resolve from Maven Central.
 
-## Quick Start
+1. Choose **Use this template** on GitHub, then clone the repository you created.
+2. In `pom.xml`, set your own `groupId`, `artifactId`, name, description, and version.
+3. Use your IDE's package refactoring to rename `com.kingsrook.qbits.example` throughout `src/`. Rename the `Example*` classes and update their imports and references with the IDE's rename refactoring.
+4. Update the QBit producer's `GROUP_ID`, `ARTIFACT_ID`, and `VERSION` constants to match your project. Give the metadata names their own stable names before combining the QBit with other examples.
+5. Build the generated project:
 
-1. **Create from template:**
-   ```bash
-   gh repo create my-company/qbit-my-app --template QRun-IO/qbit-template-application
-   ```
+```bash
+mvn clean verify
+```
 
-2. **Run customization script:**
-   ```bash
-   python scripts/customize_template.py --name my-app --package com.mycompany.qbits.myapp
-   ```
+The repository provides example Java sources; customization uses normal package/class refactoring. Keep example coordinates unpublished. After customizing, add tests for your QBit's behavior before setting up its publishing workflow.
 
-3. **Build and test:**
-   ```bash
-   mvn clean test
-   ```
+## Register with a host application
 
-## Key Differences from Other QBit Types
-
-| Feature | Extension | Data | Application |
-|---------|-----------|------|-------------|
-| QAppSection | No | Optional | **Required** |
-| Tables | 0-few | Few (reference) | Many (business) |
-| Processes | Customizers | Sync | Full business logic |
-| Widgets | No | No | **Yes** |
-
-## What to Customize
-
-1. `ExampleAppQBitConfig.java` - Add your configuration options
-2. `ExampleAppQBitProducer.java` - Update QAppSection with your tables
-3. `model/` - Replace with your entities
-4. `processes/` - Implement your business logic
-5. `widgets/` - Create your dashboard components
-
-## Usage in Host Application
+The following uses the original example names; substitute the names chosen above:
 
 ```java
-new MyAppQBitProducer()
-   .withConfig(new MyAppQBitConfig()
-      .withBackendName("rdbms")
-      .withTableNamePrefix("myapp"))
-   .produce(qInstance, "my-app");
+new ExampleAppQBitProducer()
+   .withConfig(new ExampleAppQBitConfig()
+      .withBackendName("rdbms"))
+   .produce(qInstance, "my-application");
 ```
+
+Register the configured backend in the host first. If you add table prefixes or multiple QBit instances, update related table references, possible-value-source names, and process/widget names consistently. A table prefix alone does not namespace all metadata.
+
+[Tables and Relationships](01-tables-and-relationships.md) describes the model; the `processes/` and `widgets/` directories contain the remaining examples.

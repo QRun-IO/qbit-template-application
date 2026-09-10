@@ -12,30 +12,23 @@ Use this template when building:
 
 ## Quick Start
 
-1. Click "Use this template" on GitHub
-2. Clone your new repository
-3. Run the customization script:
-   ```bash
-   python scripts/customize_template.py --name my-app --package com.mycompany.qbits.myapp
-   ```
-4. Implement your tables, processes, and widgets
-5. Add your QAppSection for UI navigation
+Requires **Java 21**, **Maven 3.8+**, and QQQ **4.0.0**. Create a repository with **Use this template**, customize its Maven coordinates and Java package/classes, then run `mvn clean verify`. Follow the [Getting Started guide](docs/00-getting-started.md) for the full sequence.
 
 ## Structure
 
 ```
 src/main/java/com/kingsrook/qbits/example/
-├── ExampleAppQBitConfig.java      # Configuration options
-├── ExampleAppQBitProducer.java    # Entry point, registers QAppSection
+├── ExampleAppQBitConfig.java
+├── ExampleAppQBitProducer.java
 ├── model/
 │   ├── ExampleEntity.java
 │   └── ExampleChildEntity.java
 ├── processes/
-│   └── ExampleProcess.java
-├── widgets/
-│   └── ExampleDashboardWidget.java
-└── api/
-    └── ExampleApiHandler.java
+│   ├── ExampleProcessStep.java
+│   └── ExampleProcessMetaDataProducer.java
+└── widgets/
+    ├── ExampleDashboardWidgetRenderer.java
+    └── ExampleDashboardWidgetMetaDataProducer.java
 ```
 
 ## Key Characteristics

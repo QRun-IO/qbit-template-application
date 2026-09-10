@@ -6,12 +6,11 @@
 package com.kingsrook.qbits.example.widgets;
 
 
-import java.util.HashMap;
-import java.util.Map;
-import com.kingsrook.qqq.backend.core.actions.dashboard.AbstractWidgetRenderer;
-import com.kingsrook.qqq.backend.core.actions.dashboard.RenderWidgetInput;
-import com.kingsrook.qqq.backend.core.actions.dashboard.RenderWidgetOutput;
+import com.kingsrook.qqq.backend.core.actions.dashboard.widgets.AbstractWidgetRenderer;
 import com.kingsrook.qqq.backend.core.exceptions.QException;
+import com.kingsrook.qqq.backend.core.model.actions.widgets.RenderWidgetInput;
+import com.kingsrook.qqq.backend.core.model.actions.widgets.RenderWidgetOutput;
+import com.kingsrook.qqq.backend.core.model.dashboard.widgets.StatisticsData;
 
 
 public class ExampleDashboardWidgetRenderer extends AbstractWidgetRenderer
@@ -22,16 +21,13 @@ public class ExampleDashboardWidgetRenderer extends AbstractWidgetRenderer
    @Override
    public RenderWidgetOutput render(RenderWidgetInput input) throws QException
    {
-      Map<String, Object> data = new HashMap<>();
-      data.put("title", "Example Dashboard");
-      data.put("description", "This is an example widget for the Application QBit template.");
-
       /////////////////////////////////////////////////////////////////////////
       // Add chart data, counts, or other dashboard information here         //
       /////////////////////////////////////////////////////////////////////////
-      data.put("totalCount", 0);
-      data.put("activeCount", 0);
+      StatisticsData data = new StatisticsData()
+         .withCount(0)
+         .withCountContext("Total items");
 
-      return new RenderWidgetOutput(data);
+      return (new RenderWidgetOutput(data));
    }
 }

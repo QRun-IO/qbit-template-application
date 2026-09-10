@@ -1,6 +1,6 @@
 # Getting Started
 
-Requires Java 21, Maven 3.8 or later, and a host application using QQQ 4.0.0. Dependencies resolve from Maven Central.
+Targets Java 21, Maven 3.8 or later, and QQQ 4.0.0. Final 4.0.0 artifacts are not published yet; these instructions become directly usable after publication. For candidate validation, build the selected candidate and supply `-Dqqq.version=<candidate-version>` rather than installing an RC under the final version.
 
 1. Choose **Use this template** on GitHub, then clone the repository you created.
 2. In `pom.xml`, set your own `groupId`, `artifactId`, name, description, and version.

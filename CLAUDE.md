@@ -3,6 +3,10 @@
 GitHub template repository for scaffolding Application QBits (complete mini-applications
 with tables, processes, widgets, and UI navigation) on the QQQ platform.
 
+## Current 4.0 preparation — 2026-09-10
+
+The historical review below predates the 4.0 migration. This release branch targets Java 21 and QQQ 4.0.0; source and renamed/generated scaffolds pass clean verification against the local RC.3 candidate. Final Maven Central publication is still pending. The corrected APIs, license references and actual template commands are in README.md and docs/00-getting-started.md. Preserve the documented multi-instance and scaffold limitations.
+
 ## Knowledge base
 
 Reviewed dossier and platform knowledge live in the second-brain vault:

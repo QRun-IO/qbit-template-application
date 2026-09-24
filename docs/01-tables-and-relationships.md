@@ -42,8 +42,9 @@ Application QBits support optional table prefixing:
 
 new MyAppQBitProducer()
    .withConfig(new MyAppQBitConfig()
+      .withBackendName("rdbms")
       .withTableNamePrefix("sales"))
    .produce(qInstance, "sales-app");
 ```
 
-The producer automatically applies the prefix to all table names.
+The producer applies the prefix to table names. When extending this pattern, also update possible-value-source names, relationship targets, process tables, and navigation references; table renaming alone does not provide complete multi-instance support.

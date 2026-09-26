@@ -17,6 +17,7 @@ import com.kingsrook.qqq.backend.core.model.metadata.MetaDataProducerHelper;
 import com.kingsrook.qqq.backend.core.model.metadata.MetaDataProducerInterface;
 import com.kingsrook.qqq.backend.core.model.metadata.MetaDataProducerOutput;
 import com.kingsrook.qqq.backend.core.model.metadata.QInstance;
+import com.kingsrook.qqq.backend.core.model.metadata.layout.QAppChildMetaData;
 import com.kingsrook.qqq.backend.core.model.metadata.layout.QAppMetaData;
 import com.kingsrook.qqq.backend.core.model.metadata.layout.QAppSection;
 import com.kingsrook.qqq.backend.core.model.metadata.layout.QIcon;
@@ -24,8 +25,9 @@ import com.kingsrook.qqq.backend.core.model.metadata.qbits.QBitMetaData;
 import com.kingsrook.qqq.backend.core.model.metadata.qbits.QBitProducer;
 import com.kingsrook.qqq.backend.core.model.metadata.qbits.SourceQBitAware;
 import com.kingsrook.qqq.backend.core.model.metadata.tables.QTableMetaData;
-import com.kingsrook.qbits.example.model.ExampleEntity;
 import com.kingsrook.qbits.example.model.ExampleChildEntity;
+import com.kingsrook.qbits.example.model.ExampleEntity;
+import com.kingsrook.qbits.example.processes.ExampleProcessMetaDataProducer;
 
 
 public class ExampleAppQBitProducer implements QBitProducer
@@ -107,7 +109,7 @@ public class ExampleAppQBitProducer implements QBitProducer
       /////////////////////////////////////////////////////////////////////////
       // Register QAppMetaData for UI navigation (REQUIRED for app QBits)    //
       /////////////////////////////////////////////////////////////////////////
-      qInstance.addApp(produceApp(config, qBitMetaData.getName()));
+      qInstance.addApp(produceApp(qInstance, config));
    }
 
 
@@ -118,27 +120,27 @@ public class ExampleAppQBitProducer implements QBitProducer
     ** This is REQUIRED for Application QBits - it defines how users navigate
     ** to the tables, processes, and widgets in the UI.
     *******************************************************************************/
-   private QAppMetaData produceApp(ExampleAppQBitConfig config, String qbitName)
+   private QAppMetaData produceApp(QInstance qInstance, ExampleAppQBitConfig config)
    {
-      List<String> tables = new ArrayList<>();
-      tables.add(config.applyPrefix(ExampleEntity.TABLE_NAME));
+      List<QAppChildMetaData> children = new ArrayList<>();
+      children.add(qInstance.getTable(config.applyPrefix(ExampleEntity.TABLE_NAME)));
 
       if(Boolean.TRUE.equals(config.getEnableChildModule()))
       {
-         tables.add(config.applyPrefix(ExampleChildEntity.TABLE_NAME));
+         children.add(qInstance.getTable(config.applyPrefix(ExampleChildEntity.TABLE_NAME)));
       }
+      children.add(qInstance.getProcess(ExampleProcessMetaDataProducer.NAME));
 
       QAppSection section = new QAppSection()
          .withName(config.applyPrefix("exampleSection"))
          .withLabel("Example Application")
-         .withIcon(new QIcon().withName("dashboard"))
-         .withTables(tables);
+         .withIcon(new QIcon().withName("dashboard"));
 
       return new QAppMetaData()
          .withName(config.applyPrefix("exampleApp"))
          .withLabel("Example Application")
          .withIcon(new QIcon().withName("dashboard"))
-         .withSection(section);
+         .withSectionOfChildren(section, children);
    }
 
 

@@ -7,7 +7,7 @@ Application QBits typically have multiple interconnected tables representing a b
 Use `@QMetaDataProducingEntity` for automatic metadata generation:
 
 ```java
-@QMetaDataProducingEntity(producePossibleValueSource = true)
+@QMetaDataProducingEntity(produceTableMetaData = true, producePossibleValueSource = true)
 public class Order extends QRecordEntity
 {
    public static final String TABLE_NAME = "order";
@@ -22,6 +22,12 @@ public class Order extends QRecordEntity
    private String status;
 }
 ```
+
+Provide JavaBean getters and setters for every persisted field, as in
+[`ExampleEntity`](../src/main/java/com/kingsrook/qbits/example/model/ExampleEntity.java).
+`producePossibleValueSource` alone does not create a table. Register the
+referenced `customer` table and possible-value source before using this
+relationship, or replace it with a registered name.
 
 ## Relationships
 
@@ -48,3 +54,5 @@ new MyAppQBitProducer()
 ```
 
 The producer applies the prefix to table names. When extending this pattern, also update possible-value-source names, relationship targets, process tables, and navigation references; table renaming alone does not provide complete multi-instance support.
+The scaffold's child-module switch omits the child table, its possible-value
+source, and its navigation entry when disabled.

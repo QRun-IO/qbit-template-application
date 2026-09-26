@@ -14,7 +14,7 @@ import com.kingsrook.qqq.backend.core.model.data.QRecordEntity;
 import com.kingsrook.qqq.backend.core.model.metadata.producers.annotations.QMetaDataProducingEntity;
 
 
-@QMetaDataProducingEntity(producePossibleValueSource = true)
+@QMetaDataProducingEntity(produceTableMetaData = true, producePossibleValueSource = true)
 public class ExampleChildEntity extends QRecordEntity
 {
    public static final String TABLE_NAME = "exampleChildEntity";
@@ -155,5 +155,45 @@ public class ExampleChildEntity extends QRecordEntity
    public Instant getModifyDate()
    {
       return modifyDate;
+   }
+
+   public void setId(Integer id)
+   {
+      this.id = id;
+   }
+
+   public void setExampleEntityId(Integer exampleEntityId)
+   {
+      this.exampleEntityId = exampleEntityId;
+   }
+
+   public void setName(String name)
+   {
+      this.name = name;
+   }
+
+   public void setDescription(String description)
+   {
+      this.description = description;
+   }
+
+   public void setSortOrder(Integer sortOrder)
+   {
+      this.sortOrder = sortOrder;
+   }
+
+   public void setIsActive(Boolean isActive)
+   {
+      this.isActive = isActive;
+   }
+
+   public void setCreateDate(Instant createDate)
+   {
+      this.createDate = createDate;
+   }
+
+   public void setModifyDate(Instant modifyDate)
+   {
+      this.modifyDate = modifyDate;
    }
 }

@@ -34,6 +34,7 @@ import com.kingsrook.qbits.example.processes.ExampleProcessStep;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ExampleAppQBitProducerTest
@@ -78,6 +79,22 @@ class ExampleAppQBitProducerTest
       assertTrue(app.getSections().stream().anyMatch(section ->
          section.getTables().contains(ExampleEntity.TABLE_NAME)
             && section.getProcesses().contains("exampleProcess")));
+   }
+
+   @Test
+   void disabledChildModuleOmitsChildTableSourceAndNavigation() throws Exception
+   {
+      QInstance instance = new QInstance();
+      instance.addBackend(new QBackendMetaData().withName("rdbms"));
+      new ExampleAppQBitProducer()
+         .withConfig(new ExampleAppQBitConfig().withBackendName("rdbms").withEnableChildModule(false))
+         .produce(instance, "no-child");
+
+      assertNotNull(instance.getTable(ExampleEntity.TABLE_NAME));
+      assertNull(instance.getTable(ExampleChildEntity.TABLE_NAME));
+      assertNull(instance.getPossibleValueSource(ExampleChildEntity.TABLE_NAME));
+      assertTrue(instance.getApp("exampleApp").getSections().stream()
+         .noneMatch(section -> section.getTables().contains(ExampleChildEntity.TABLE_NAME)));
    }
 
    private QInstance produce() throws Exception

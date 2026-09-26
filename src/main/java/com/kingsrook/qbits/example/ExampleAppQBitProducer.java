@@ -155,7 +155,7 @@ public class ExampleAppQBitProducer implements QBitProducer
       /////////////////////////////////////////////////////////////////////////
       if(!Boolean.TRUE.equals(config.getEnableChildModule()))
       {
-         if(producer.getClass().getSimpleName().contains("ExampleChildEntity"))
+         if(ExampleChildEntity.class.equals(producer.getSourceClass()))
          {
             return false;
          }

@@ -7,12 +7,13 @@ package com.kingsrook.qbits.example.processes;
 import java.util.List;
 import com.kingsrook.qqq.backend.core.exceptions.QException;
 import com.kingsrook.qqq.backend.core.model.metadata.QInstance;
+import com.kingsrook.qqq.backend.core.model.metadata.MetaDataProducerInterface;
 import com.kingsrook.qqq.backend.core.model.metadata.code.QCodeReference;
 import com.kingsrook.qqq.backend.core.model.metadata.fields.QFieldMetaData;
 import com.kingsrook.qqq.backend.core.model.metadata.fields.QFieldType;
 import com.kingsrook.qqq.backend.core.model.metadata.processes.QBackendStepMetaData;
+import com.kingsrook.qqq.backend.core.model.metadata.processes.QFunctionInputMetaData;
 import com.kingsrook.qqq.backend.core.model.metadata.processes.QProcessMetaData;
-import com.kingsrook.qqq.backend.core.model.MetaDataProducerInterface;
 import com.kingsrook.qbits.example.model.ExampleEntity;
 
 
@@ -32,15 +33,14 @@ public class ExampleProcessMetaDataProducer implements MetaDataProducerInterface
          .withName(NAME)
          .withLabel("Example Process")
          .withTableName(ExampleEntity.TABLE_NAME)
-         .withInputFields(List.of(
-            new QFieldMetaData("confirmAction", QFieldType.BOOLEAN)
-               .withLabel("Confirm Action")
-               .withDefaultValue(false)
-         ))
          .withStepList(List.of(
             new QBackendStepMetaData()
                .withName("process")
                .withCode(new QCodeReference(ExampleProcessStep.class))
+               .withInputData(new QFunctionInputMetaData()
+                  .withField(new QFieldMetaData("confirmAction", QFieldType.BOOLEAN)
+                     .withLabel("Confirm Action")
+                     .withDefaultValue(false)))
          ));
    }
 }

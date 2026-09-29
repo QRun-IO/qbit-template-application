@@ -9,19 +9,17 @@
 package com.kingsrook.qbits.example.processes;
 
 
-import java.util.ArrayList;
 import java.util.List;
+import com.kingsrook.qqq.backend.core.actions.processes.BackendStep;
 import com.kingsrook.qqq.backend.core.exceptions.QException;
 import com.kingsrook.qqq.backend.core.logging.QLogger;
-import com.kingsrook.qqq.backend.core.model.actions.processes.ProcessSummaryLineInterface;
 import com.kingsrook.qqq.backend.core.model.actions.processes.RunBackendStepInput;
 import com.kingsrook.qqq.backend.core.model.actions.processes.RunBackendStepOutput;
 import com.kingsrook.qqq.backend.core.model.data.QRecord;
-import com.kingsrook.qqq.backend.core.processes.implementations.etl.streamedwithfrontend.AbstractTransformStep;
 import static com.kingsrook.qqq.backend.core.logging.LogUtils.logPair;
 
 
-public class ExampleProcessStep extends AbstractTransformStep
+public class ExampleProcessStep implements BackendStep
 {
    private static final QLogger LOG = QLogger.getLogger(ExampleProcessStep.class);
 
@@ -31,7 +29,7 @@ public class ExampleProcessStep extends AbstractTransformStep
     ** Run the process step.
     *******************************************************************************/
    @Override
-   public void runOnePage(RunBackendStepInput input, RunBackendStepOutput output) throws QException
+   public void run(RunBackendStepInput input, RunBackendStepOutput output) throws QException
    {
       List<QRecord> records = input.getRecords();
       LOG.info("Processing records", logPair("count", records.size()));
@@ -55,13 +53,4 @@ public class ExampleProcessStep extends AbstractTransformStep
 
 
 
-   /*******************************************************************************
-    ** Return the process summary. Override this method in subclasses to provide
-    ** meaningful summary lines for the result screen.
-    *******************************************************************************/
-   @Override
-   public ArrayList<ProcessSummaryLineInterface> getProcessSummary(RunBackendStepOutput runBackendStepOutput, boolean isForResultScreen)
-   {
-      return (new ArrayList<>());
-   }
 }

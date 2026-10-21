@@ -1,58 +1,7 @@
 # Processes
 
-Application QBits include processes for business logic execution.
+Start with [ExampleProcessMetaDataProducer](../src/main/java/com/kingsrook/qbits/example/processes/ExampleProcessMetaDataProducer.java) and [ExampleProcessStep](../src/main/java/com/kingsrook/qbits/example/processes/ExampleProcessStep.java). The producer defines the process, its table, inputs, and backend step; the step transforms `PENDING` records to `PROCESSED` and returns them in the output.
 
-## Process Structure
+In QQQ 4.0, import `MetaDataProducerInterface` from `com.kingsrook.qqq.backend.core.model.metadata`. Define process inputs through `withInputMetaData(new QFunctionInputMetaData().withField(...))`. An `AbstractTransformStep` must implement both `runOnePage(RunBackendStepInput, RunBackendStepOutput)` and `getProcessSummary(RunBackendStepOutput, boolean)`; keep the example's implementations when renaming it.
 
-```java
-public class MyProcessMetaDataProducer implements MetaDataProducerInterface<QProcessMetaData>
-{
-   public static final String NAME = "myProcess";
-
-   @Override
-   public QProcessMetaData produce(QInstance qInstance)
-   {
-      return new QProcessMetaData()
-         .withName(NAME)
-         .withLabel("My Process")
-         .withTableName(MyEntity.TABLE_NAME)
-         .withStepList(List.of(
-            new QBackendStepMetaData()
-               .withName("execute")
-               .withCode(new QCodeReference(MyProcessStep.class))
-         ));
-   }
-}
-```
-
-## Process Steps
-
-Implement `AbstractTransformStep` for record processing:
-
-```java
-public class MyProcessStep extends AbstractTransformStep
-{
-   @Override
-   public void runOnePage(RunBackendStepInput input, RunBackendStepOutput output)
-   {
-      for(QRecord record : input.getRecords())
-      {
-         // Business logic here
-         output.addRecord(record);
-      }
-   }
-}
-```
-
-## Including in QAppSection
-
-Add processes to your app's navigation:
-
-```java
-return new QAppSection()
-   .withName("myApp")
-   .withTables(List.of(...))
-   .withProcesses(List.of(
-      config.applyPrefix(MyProcess.NAME)
-   ));
-```
+To make the process discoverable in navigation, add its registered name to a `QAppSection` through `withProcesses(List.of(ExampleProcessMetaDataProducer.NAME))`, then include the section in a `QAppMetaData` registered with `qInstance.addApp(...)`. Use the actual registered name if you introduce a prefix. Add tests for record changes and failure cases when replacing the example business logic.

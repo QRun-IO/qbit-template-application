@@ -9,11 +9,13 @@
 package com.kingsrook.qbits.example.processes;
 
 
+import java.util.ArrayList;
 import java.util.List;
-import com.kingsrook.qqq.backend.core.actions.processes.RunBackendStepInput;
-import com.kingsrook.qqq.backend.core.actions.processes.RunBackendStepOutput;
 import com.kingsrook.qqq.backend.core.exceptions.QException;
 import com.kingsrook.qqq.backend.core.logging.QLogger;
+import com.kingsrook.qqq.backend.core.model.actions.processes.ProcessSummaryLineInterface;
+import com.kingsrook.qqq.backend.core.model.actions.processes.RunBackendStepInput;
+import com.kingsrook.qqq.backend.core.model.actions.processes.RunBackendStepOutput;
 import com.kingsrook.qqq.backend.core.model.data.QRecord;
 import com.kingsrook.qqq.backend.core.processes.implementations.etl.streamedwithfrontend.AbstractTransformStep;
 import static com.kingsrook.qqq.backend.core.logging.LogUtils.logPair;
@@ -49,5 +51,17 @@ public class ExampleProcessStep extends AbstractTransformStep
       }
 
       LOG.info("Processing complete", logPair("processed", records.size()));
+   }
+
+
+
+   /*******************************************************************************
+    ** Return the process summary. Override this method in subclasses to provide
+    ** meaningful summary lines for the result screen.
+    *******************************************************************************/
+   @Override
+   public ArrayList<ProcessSummaryLineInterface> getProcessSummary(RunBackendStepOutput runBackendStepOutput, boolean isForResultScreen)
+   {
+      return (new ArrayList<>());
    }
 }

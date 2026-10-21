@@ -16,7 +16,7 @@
       <maven.compiler.source>21</maven.compiler.source>
       <maven.compiler.target>21</maven.compiler.target>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <qqq.version>0.40.0-SNAPSHOT</qqq.version>
+      <qqq.version>4.0.0</qqq.version>
    </properties>
 
    <dependencies>
@@ -37,7 +37,7 @@
       <dependency>
          <groupId>org.assertj</groupId>
          <artifactId>assertj-core</artifactId>
-         <version>3.24.2</version>
+         <version>3.27.7</version>
          <scope>test</scope>
       </dependency>
       <dependency>
